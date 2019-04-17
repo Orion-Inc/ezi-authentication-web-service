@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "paths": {
+      "*":[
+        "node_modules/*"
+      ]
+    }
+  },
+  "include": [
+    "api/**/*",
+    "controllers/**/*",
+    "models/**/*",
+    "guards/*",
+    "policies/*",
+    "service/*",
+    "utils/*"
+  ]
+}
