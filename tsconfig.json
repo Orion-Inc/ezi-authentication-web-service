@@ -21,6 +21,6 @@
     "guards/*",
     "policies/*",
     "service/*",
-    "utils/*"
+    "utils/**/*"
   ]
 }
