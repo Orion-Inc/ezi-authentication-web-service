@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import { hashPassword } from "../utils/resolvers";
 import { default as Roles } from "./roles"
 
 const Schema = mongoose.Schema;
