@@ -46,5 +46,11 @@ const SchoolSchema = new Schema({
     }
 });
 
+// making configurations for the middleware hooks
+SchoolSchema.pre("update", function (next) {
+    this.update({},{ $set: { updated_at: Date.now() }});
+    next();
+});
+
 const School = mongoose.model("Schools", SchoolSchema);
 export default School;
