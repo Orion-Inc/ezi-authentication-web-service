@@ -9,7 +9,7 @@ const ParentSchema = new Schema({
         type: String,
         required: true
     },
-    occcupation: {
+    occupation: {
         type: String,
         required: true
     },
