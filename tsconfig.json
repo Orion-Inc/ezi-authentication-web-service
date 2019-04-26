@@ -9,6 +9,13 @@
     "baseUrl": ".",
     "sourceMap": true,
     "paths": {
+      "@api/*": ["api/v1"],
+      "@models/*": ["models/*"],
+      "@utils/*": ["utils/*"],
+      "@controllers/*": ["controllers/v1/*"],
+      "@services/*": ["services/*"],
+      "@guards/*": ["guards/*"],
+      "@policies/*":["policies/*"],
       "*":[
         "node_modules/*"
       ]
