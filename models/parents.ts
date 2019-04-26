@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { default as Relationship } from "./relationship"
+import { default as Relationship } from "@models/relationship"
 
 
 const Schema = mongoose.Schema;
@@ -9,7 +9,7 @@ const ParentSchema = new Schema({
         type: String,
         required: true
     },
-    occcupation: {
+    occupation: {
         type: String,
         required: true
     },
