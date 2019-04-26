@@ -8,7 +8,7 @@
     "start": "pm2 start app.ts --watch --name='authentication-web-service'",
     "rebuild": "pm2 delete authentication-web-service && npm start",
     "build-ts": "tsc",
-    "test": "mocha"
+    "test": "mocha -r ts-node/register test/*"
   },
   "keywords": [],
   "author": "",
@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/chai": "^4.1.7",
     "@types/compression": "0.0.36",
     "@types/cors": "^2.8.4",
     "@types/dotenv": "^6.1.1",
@@ -57,6 +58,7 @@
     "@types/helmet": "0.0.43",
     "@types/joi": "^14.3.3",
     "@types/lodash": "^4.14.123",
+    "@types/mocha": "^5.2.6",
     "@types/module-alias": "^2.0.0",
     "@types/mongodb": "^3.1.23",
     "@types/mongoose": "^5.3.26",
