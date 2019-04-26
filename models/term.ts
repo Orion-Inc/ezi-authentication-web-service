@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { default as Year } from "@models/year"
 
 const Schema = mongoose.Schema;
 
@@ -7,6 +8,11 @@ const TermSchema = new Schema({
         type: String,
         required: true
     },
+    academic_year_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Year',
+        required: true
+    }
 },{
     timestamps:{
         createdAt: "created_at",
