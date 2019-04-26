@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 import { expect } from "chai"
 
 // writing a test suit for the connection with the database
-before((done) => {
+before(function(done) {
     mongoose.connect(process.env.MONGO_URL_LOCAL, {
         dbName: "schools_testing",
         useNewUrlParser: true
@@ -10,17 +10,18 @@ before((done) => {
     mongoose.set('useCreateIndex', true);
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, "connection error"));
-    db.once('open', () => {
+    db.once('open', function() {
         done();
     });
 });
 
-after( (done) => {
-    mongoose.connection.close(done);
-});
+// after( function(done) {
+//     mongoose.connection.close(done);
+// });
 
-export default () => {
-    afterEach((done) => {
+export default function () {
+    after( function(done) {
+        mongoose.connection.close(done);
         mongoose.connection.db.dropDatabase(done);
     });
 }
