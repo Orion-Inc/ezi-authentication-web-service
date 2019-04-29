@@ -5,8 +5,8 @@
   "main": "dist/app.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-    "start": "pm2 start app.ts --watch --name='authentication-web-service'",
-    "rebuild": "pm2 delete authentication-web-service && npm start",
+    "start": "./node_modules/.bin/pm2 start app.ts --watch --name='authentication-web-service'",
+    "rebuild": "pm2 delete authentication-web-service && npm run start",
     "build-ts": "tsc",
     "test": "mocha -r ts-node/register test/*"
   },

@@ -1,0 +1,41 @@
+import * as Joi from "joi"
+import { Request, Response , NextFunction} from "express";
+
+class SignInPolicy {
+    static loginPolicy(req: Request, res: Response, next: NextFunction) {
+        //input schema configuration here
+        const bodyReq = {
+            email: req.body.email || req.body.email_address,
+            password: req.body.password
+        };
+        // validation schema here
+        const joiSchema = Joi.object().keys({
+            email: Joi.string().email({ minDomainAtoms: 2 }).required(),
+            password: Joi.string().regex(/^[0-9A-Za-z]+$/).min(6).required()
+        });
+
+        let { error , value } = Joi.validate(bodyReq, joiSchema);
+        if (error) {
+            switch (error.details[0].context.key) {
+                case 'email':
+                    res.status(405)
+                        .json({
+                            message: error.details[0].message,
+                            success: false
+                        });
+                    break;
+                case 'password':
+                    res.status(405)
+                        .json({
+                            message: error.details[0].message,
+                            success: false
+                        });
+                    break;
+            }
+        } else {
+            next();
+        }
+    }
+}
+
+export default SignInPolicy;
