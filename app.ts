@@ -3,7 +3,7 @@ import "module-alias/register";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
-import express from "express";
+import express, {Request, Response} from "express";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import morgan from "morgan";
@@ -51,6 +51,16 @@ class Server {
      */
     protected routes():void {
         this.app.use("/api/v1", authWebService);
+    }
+
+    public testEndpoint(): void {
+        this.app.get("/testing", (req: Request, res: Response) => {
+            res.status(200)
+                .json({
+                    message: "Server Up And Running !!!",
+                    success: true
+                })
+        });
     }
 
     /**

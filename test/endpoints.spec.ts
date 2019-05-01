@@ -1,10 +1,11 @@
 import { expect } from "chai"
-import { default as app } from "../app"
+import { default as Server } from "../app"
 import request from "supertest"
 
+const server = new Server();
 describe("GET /testing", function () {
     it('should return a testing message', function (done) {
-        request(app)
+        return request(server)
             .get("/testing")
             .expect(200)
             .end((err, results) => {
