@@ -15,6 +15,7 @@ class Server {
         this.config();
         this.mongo();
         this.routes();
+        this.testEndpoint();
     }
 
     public config(): void {

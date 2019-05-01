@@ -2,10 +2,10 @@ import { expect } from "chai"
 import { default as Server } from "../app"
 import request from "supertest"
 
-const server = new Server();
+const server = request.agent("http://localhost:8088");
 describe("GET /testing", function () {
     it('should return a testing message', function (done) {
-        return request(server)
+         server
             .get("/testing")
             .expect(200)
             .end((err, results) => {
