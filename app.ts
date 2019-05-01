@@ -3,16 +3,18 @@ import "module-alias/register";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
-import express, {Request, Response} from "express";
+import express from "express";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import morgan from "morgan";
+import { default as authWebService } from "./api/v1/authentication-web-service";
 class Server {
     public app: express.Application;
     public constructor(){
         this.app = express();
         this.config();
         this.mongo();
+        this.routes();
     }
 
     public config(): void {
@@ -43,6 +45,18 @@ class Server {
         });
     }
 
+    /**
+     * This configurations contains the endpoint mouthpiece
+     * @return null
+     */
+    protected routes():void {
+        this.app.use("/api/v1", authWebService);
+    }
+
+    /**
+     * This configurations start the web server
+     * @return null
+     */
     public start(): void {
         this.app.listen(this.app.get("PORT"),() => {
             console.log(process.env.API_NAME);
