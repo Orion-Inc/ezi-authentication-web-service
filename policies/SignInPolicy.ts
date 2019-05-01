@@ -5,8 +5,8 @@ class SignInPolicy {
     static loginPolicy(req: Request, res: Response, next: NextFunction) {
         //input schema configuration here
         const bodyReq = {
-            email: req.body.email || req.body.email_address,
-            password: req.body.password
+            email: <string> req.body.email ||<string> req.body.email_address,
+            password: <string> req.body.password
         };
         // validation schema here
         const joiSchema = Joi.object().keys({

@@ -1,12 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import * as Joi from "joi"
+import {string} from "joi";
 class SignUpPolicy {
     static registerPolicy = (req: Request, res: Response, next: NextFunction ) => {
         // Input schema from the request body
         const reqSchema = {
-            name: req.body.name,
-            email: req.body.email,
-            phone: req.body.phone
+            name: <string> req.body.name,
+            email: <string> req.body.email,
+            phone: <string> req.body.phone
         };
 
         // definition schema for validation
