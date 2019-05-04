@@ -12,6 +12,10 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    uuid: {
+        type: String,
+        required: true
+    },
     role_id: {
         type: Schema.Types.ObjectId,
         ref: 'Roles',
