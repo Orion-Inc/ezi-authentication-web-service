@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import {default as authWebService} from "./api/v1/authentication-web-service";
 import {default as Roles} from "@models/roles";
+import {shortForRoles} from "./utils/resolvers";
 
 class Server {
     public app: express.Application;
@@ -19,6 +20,7 @@ class Server {
         this.mongo();
         this.routes();
         this.testEndpoint();
+        this.roles();
     }
 
     public config(): void {
@@ -102,7 +104,7 @@ class Server {
                 } else {
                     const roleReq = new Roles({
                         name: req.body.name,
-                        short: req.body.short,
+                        short: shortForRoles(req.body.name),
                         description: req.body.description
                     });
                     roleReq.save((err, role) => {
@@ -124,19 +126,47 @@ class Server {
                     })
                 }
             });
-        })
+        });
         // delete a role endpoint
         this.app.route("/roles/:id")
-            .patch((req: Request, Res: Response) => {
-                Roles.findByIdAndUpdate(req.params.id,{
+            .patch((req: Request, res: Response) => {
+                Roles.findByIdAndUpdate(req.params.id, {
                     $set: {
                         name: req.body.name,
-
+                        short: shortForRoles(req.body.name),
+                        description: req.body.description
+                    }
+                }, {new: true}, (err, results) => {
+                    if (!err && results) {
+                        res.status(200)
+                            .json({
+                                message: "Role updated successfully",
+                                success: true,
+                                results: results
+                            })
+                    } else {
+                        res.status(500)
+                            .json({
+                                message: "An error occurred while updating role",
+                                success: false,
+                                results: err
+                            })
                     }
                 })
             })
-            .delete((req: Request, Res: Response) => {
-
+            .delete((req: Request, res: Response) => {
+                Roles.findByIdAndRemove(req.params.id, {
+                    select: "name"
+                }, (err, results) => {
+                    if (!err && results) {
+                        res.status(200)
+                            .json({
+                                message: "Role deleted successfully",
+                                success: true,
+                                results: results
+                            });
+                    }
+                })
             });
     }
 
