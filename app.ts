@@ -111,7 +111,7 @@ class Server {
                     });
                     roleReq.save((err, role) => {
                         if (!err && role) {
-                            res.status(500)
+                            res.status(201)
                                 .json({
                                     message: "Role successfully saved",
                                     success: true,
