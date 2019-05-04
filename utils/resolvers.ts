@@ -19,14 +19,18 @@ export async function hashPassword(password: string) {
 }
 
 export async function comparePassword(password: string, hash: string) {
-   return new Promise<boolean>((resolve, reject) => {
-       bcrypt.compare(password, hash, (error, results) => {
-           if (error) { reject(error); } else { resolve(results); }
-       });
-   });
+    return new Promise<boolean>((resolve, reject) => {
+        bcrypt.compare(password, hash, (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        });
+    });
 }
 
-export function generateToken(min: number, max: number): number | string{
+export function generateToken(min: number, max: number): number | string {
     if (_.isNaN(min) || _.isNaN(max)) {
         return 0;
     } else {
@@ -34,7 +38,7 @@ export function generateToken(min: number, max: number): number | string{
     }
 }
 
-export async function generateUUID(email: string, namespace= UUID.DNS) {
+export async function generateUUID(email: string, namespace = UUID.DNS) {
     return new Promise<string>((resolve, reject) => {
         const randomNumber: number = this.generateToken(10000000, 99999999);
         const scram = randomNumber + email + randomNumber;
@@ -45,4 +49,13 @@ export async function generateUUID(email: string, namespace= UUID.DNS) {
             reject(new Error("An error occurred while generating new UUID value"));
         }
     });
+}
+
+export function shortForRoles(name: string): string {
+    const name_array = name.split(" ");
+    let results = "";
+    for (let item of name_array) {
+        results += item.charAt(0).toLowerCase();
+    }
+    return results;
 }
