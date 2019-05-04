@@ -25,3 +25,5 @@ class RolesPolicy {
         }
     }
 }
+
+export default RolesPolicy;
