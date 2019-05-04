@@ -1,5 +1,5 @@
 import { expect } from "chai"
-import { generateUUID, hashPassword , comparePassword , generateToken } from "../utils/resolvers";
+import { generateUUID, hashPassword , comparePassword , generateToken , shortForRoles } from "../utils/resolvers";
 
 describe("Resolver Function", () => {
     it('should generate a hash password', function (done) {
@@ -23,6 +23,13 @@ describe("Resolver Function", () => {
        const token = generateToken(10000,99999);
        expect(token).to.be.a("number");
        done();
+    });
+
+    it('should generate a short name of two characters', function (done) {
+        const short = shortForRoles("School Administrator");
+        expect(short).to.be.a("string");
+        expect(short).to.have.lengthOf(2);
+        done();
     });
 });
 
