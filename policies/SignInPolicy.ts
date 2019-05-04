@@ -14,18 +14,18 @@ class SignInPolicy {
             password: Joi.string().regex(/^[0-9A-Za-z]+$/).min(6).required()
         });
 
-        let {error, value} = Joi.validate(bodyReq, joiSchema);
+        let {error} = Joi.validate(bodyReq, joiSchema);
         if (error) {
             switch (error.details[0].context.key) {
                 case 'email':
-                    res.status(405)
+                    res.status(403)
                         .json({
                             message: error.details[0].message,
                             success: false
                         });
                     break;
                 case 'password':
-                    res.status(405)
+                    res.status(403)
                         .json({
                             message: error.details[0].message,
                             success: false
