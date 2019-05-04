@@ -10,6 +10,8 @@ import morgan from "morgan";
 import {default as authWebService} from "./api/v1/authentication-web-service";
 import {default as Roles} from "@models/roles";
 import {shortForRoles} from "./utils/resolvers";
+import {default as RolesPolicy} from "@policies/RolesPolicy"
+
 
 class Server {
     public app: express.Application;
@@ -92,8 +94,8 @@ class Server {
             });
         });
         // saving of roles endpoint
-        this.app.post("/role/add", (req: Request, res: Response) => {
-            Roles.findOne({name: req.body.name, short: req.body.short}, (err, results) => {
+        this.app.post("/role/add", RolesPolicy.rolesPolicy, (req: Request, res: Response) => {
+            Roles.findOne({ name: req.body.name, short: shortForRoles( req.body.name ) }, (err, results) => {
                 if (!err && results) {
                     res.status(200)
                         .json({
