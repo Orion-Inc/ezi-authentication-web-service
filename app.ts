@@ -79,7 +79,7 @@ class Server {
      */
     protected roles(): void {
         // getting of all roles
-        this.app.get("/roles/all", (req: Request, res: Response) => {
+        this.app.get("/role/all", (req: Request, res: Response) => {
             Roles.find({}, (err, results) => {
                 if (!err && results) {
                     res.status(200)
@@ -92,7 +92,7 @@ class Server {
             });
         });
         // saving of roles endpoint
-        this.app.post("/roles/add", (req: Request, res: Response) => {
+        this.app.post("/role/add", (req: Request, res: Response) => {
             Roles.findOne({name: req.body.name, short: req.body.short}, (err, results) => {
                 if (!err && results) {
                     res.status(200)
@@ -128,7 +128,7 @@ class Server {
             });
         });
         // delete a role endpoint
-        this.app.route("/roles/:id")
+        this.app.route("/role/:id")
             .patch((req: Request, res: Response) => {
                 Roles.findByIdAndUpdate(req.params.id, {
                     $set: {
