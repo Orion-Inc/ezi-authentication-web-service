@@ -8,7 +8,9 @@ class SignUpPolicy {
             name: <string> req.body.name,
             email: <string> req.body.email,
             password: <string> req.body.password,
-            phone: <string> req.body.phone
+            phone: <string> req.body.phone,
+            is_basic: <boolean> req.body.is_basic,
+            is_secondary: <boolean> req.body.is_secondary
         };
 
         // definition schema for validation
@@ -16,10 +18,12 @@ class SignUpPolicy {
             name: Joi.string().min(8).required(),
             email: Joi.string().email({minDomainAtoms: 2}).required(),
             password: Joi.string().regex(/[0-9A-Za-z]+{,8}/).min(8).required(),
-            phone: Joi.number().integer().min(10).required()
+            phone: Joi.number().integer().min(10).required(),
+            is_basic: Joi.boolean().required(),
+            is_secondary: Joi.boolean().required()
         });
 
-        const {error, value} = Joi.validate(reqSchema, joiSchema);
+        const {error} = Joi.validate(reqSchema, joiSchema);
         if (error) {
             switch (error.details[0].context.key) {
                 case 'name':
@@ -44,6 +48,20 @@ class SignUpPolicy {
                         });
                     break;
                 case 'phone':
+                    res.status(403)
+                        .json({
+                            message: error.details[0].message,
+                            success: false
+                        });
+                    break;
+                case 'is_basic':
+                    res.status(403)
+                        .json({
+                            message: error.details[0].message,
+                            success: false
+                        });
+                    break;
+                case 'is_secondary':
                     res.status(403)
                         .json({
                             message: error.details[0].message,
