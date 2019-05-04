@@ -29,7 +29,7 @@ class SignUpController {
                     userQuery.save((err, user) => {
                         if (!err && user) {
                             // generate a token and send it to the user to verify the accounts
-                            let token = generateToken(100000,99999);
+                            let token = generateToken(10000,99999);
                             res.status(201)
                                 .json({
                                     message: "School cloud space successfully crafted." +

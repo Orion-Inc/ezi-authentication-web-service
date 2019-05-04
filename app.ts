@@ -125,6 +125,19 @@ class Server {
                 }
             });
         })
+        // delete a role endpoint
+        this.app.route("/roles/:id")
+            .patch((req: Request, Res: Response) => {
+                Roles.findByIdAndUpdate(req.params.id,{
+                    $set: {
+                        name: req.body.name,
+
+                    }
+                })
+            })
+            .delete((req: Request, Res: Response) => {
+
+            });
     }
 
     /**
