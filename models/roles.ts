@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
-const Schema  = mongoose.Schema;
+
+const Schema = mongoose.Schema;
 
 const RoleSchema = new Schema({
     name: {
@@ -16,7 +17,7 @@ const RoleSchema = new Schema({
         required: false
     }
 
-},{
+}, {
     timestamps: {
         createdAt: "created_at",
         updatedAt: "updated_at"
@@ -25,7 +26,7 @@ const RoleSchema = new Schema({
 
 // defining the  middleware hooks here
 RoleSchema.pre('update', function (next) {
-    this.update({},{ $set:{ updated_at: Date.now() }});
+    this.update({}, {$set: {updated_at: Date.now()}});
     next();
 });
 
