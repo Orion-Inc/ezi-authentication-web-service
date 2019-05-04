@@ -7,10 +7,12 @@ import express, {Request, Response} from "express";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import morgan from "morgan";
-import { default as authWebService } from "./api/v1/authentication-web-service";
+import {default as authWebService} from "./api/v1/authentication-web-service";
+
 class Server {
     public app: express.Application;
-    public constructor(){
+
+    public constructor() {
         this.app = express();
         this.config();
         this.mongo();
@@ -19,7 +21,7 @@ class Server {
     }
 
     public config(): void {
-        dotenv.config({ path: ".env" });
+        dotenv.config({path: ".env"});
         this.app.set("PORT", process.env.PORT || 8088);
         // setting up the default header configurations here
         this.app.use(cors());
@@ -29,6 +31,28 @@ class Server {
             extended: true
         }));
         this.app.use(morgan("dev"));
+    }
+
+    public testEndpoint(): void {
+        this.app.get("/testing", (req: Request, res: Response) => {
+            res.status(200)
+                .json({
+                    message: "Server Up And Running !!!",
+                    success: true
+                })
+        });
+    }
+
+    /**
+     * This configurations start the web server
+     * @return null
+     */
+    public start(): void {
+        this.app.listen(this.app.get("PORT"), () => {
+            console.log(process.env.API_NAME);
+            console.log("Version Number ::->" + process.env.API_VERSION_NUMBER);
+            console.log(`Server up and running: http://localhost:${this.app.get("PORT")}`);
+        });
     }
 
     protected mongo(): void {
@@ -50,30 +74,8 @@ class Server {
      * This configurations contains the endpoint mouthpiece
      * @return null
      */
-    protected routes():void {
+    protected routes(): void {
         this.app.use("/api/v1", authWebService);
-    }
-
-    public testEndpoint(): void {
-        this.app.get("/testing", (req: Request, res: Response) => {
-            res.status(200)
-                .json({
-                    message: "Server Up And Running !!!",
-                    success: true
-                })
-        });
-    }
-
-    /**
-     * This configurations start the web server
-     * @return null
-     */
-    public start(): void {
-        this.app.listen(this.app.get("PORT"),() => {
-            console.log(process.env.API_NAME);
-            console.log("Version Number ::->" + process.env.API_VERSION_NUMBER);
-            console.log(`Server up and running: http://localhost:${this.app.get("PORT")}`);
-        });
     }
 }
 

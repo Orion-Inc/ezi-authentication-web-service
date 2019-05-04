@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import * as Joi from "joi"
-import {string} from "joi";
 class SignUpPolicy {
     static registerPolicy = (req: Request, res: Response, next: NextFunction ) => {
         // Input schema from the request body
