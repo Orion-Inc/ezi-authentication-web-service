@@ -29,6 +29,7 @@ describe("Resolver Function", () => {
         const short = shortForRoles("School Administrator");
         expect(short).to.be.a("string");
         expect(short).to.have.lengthOf(2);
+        expect(short).to.equal("sa");
         done();
     });
 });
