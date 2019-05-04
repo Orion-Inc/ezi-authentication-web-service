@@ -1,6 +1,7 @@
 import * as jwt from "jsonwebtoken";
 import {NextFunction, Request, Response, Router} from "express";
 import config from "../config/config"
+
 const authorizationGuard = Router();
 
 class JWTAuth {
@@ -13,7 +14,7 @@ class JWTAuth {
     static checkToken = (req: Request, res: Response, next: NextFunction) => {
         const token: string = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['Authorization'];
         if (token) {
-            jwt.verify(token, config.secret,{
+            jwt.verify(token, config.secret, {
                 algorithms: ['HS256']
             }, (err, decoded) => {
                 if (err) {
