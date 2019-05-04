@@ -1,7 +1,7 @@
-import { default as School } from "@models/school"
-import { default as Users } from "@models/users"
-import { hashPassword, generateToken  } from "@utils/resolvers";
-import { Request, Response } from "express";
+import {default as School} from "@models/school"
+import {default as Users} from "@models/users"
+import {hashPassword, generateToken} from "@utils/resolvers";
+import {Request, Response} from "express";
 
 class SignUpController {
     static register = async (req: Request, res: Response) => {
@@ -16,17 +16,35 @@ class SignUpController {
             is_basic: req.body.is_basic,
             is_secondary: req.body.is_secondary
         });
-        schoolQuery.save((err,results) => {
+        schoolQuery.save((err, results) => {
             if (!err && results) {
                 // when the school information is saved successfully, then move on to save the user credentials
                 hashPassword(req.body.password).then((hashed) => {
                     const userQuery = new Users({
                         email: req.body.email,
                         password: hashed,
+                        role_id: '',
                         is_default: true
                     });
                     userQuery.save((err, user) => {
-
+                        if (!err && user) {
+                            // generate a token and send it to the user to verify the accounts
+                            let token = generateToken(100000,99999);
+                            res.status(201)
+                                .json({
+                                    message: "School cloud space successfully crafted." +
+                                        "An email has been sent to confirm your accounts",
+                                    success: true,
+                                    results: user
+                                })
+                        } else {
+                            res.status(500)
+                                .json({
+                                    message: "An error occurred while saving login credentials",
+                                    success: false,
+                                    results: err
+                                });
+                        }
                     })
                 });
             } else {
