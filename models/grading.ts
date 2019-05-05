@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 const Schema = mongoose.Schema;
 
 const GradingSchema = new Schema({
-   min: {
+    min: {
         type: Number,
         required: true
     },
@@ -11,12 +11,12 @@ const GradingSchema = new Schema({
         type: Number,
         required: true
     },
-   interpretation: {
+    interpretation: {
         type: String,
         required: false
     },
-},{
-    timestamps:{
+}, {
+    timestamps: {
         createdAt: "created_at",
         updatedAt: "updated_at"
     }
@@ -24,7 +24,7 @@ const GradingSchema = new Schema({
 
 // making configurations for the middleware hooks
 GradingSchema.pre("update", function (next) {
-    this.update({},{ $set: { updated_at: Date.now() }});
+    this.update({}, {$set: {updated_at: Date.now()}});
     next();
 });
 
