@@ -1,5 +1,6 @@
 import {default as School} from "@models/school"
 import {default as Users} from "@models/users"
+import {default as Roles} from "@models/roles"
 import {hashPassword, generateToken} from "@utils/resolvers";
 import {Request, Response} from "express";
 
@@ -19,6 +20,9 @@ class SignUpController {
         schoolQuery.save((err, results) => {
             if (!err && results) {
                 // when the school information is saved successfully, then move on to save the user credentials
+                Roles.findOne({ short: "sa" }, (err,results) => {
+
+                });
                 hashPassword(req.body.password).then((hashed) => {
                     const userQuery = new Users({
                         email: req.body.email,
@@ -29,7 +33,7 @@ class SignUpController {
                     userQuery.save((err, user) => {
                         if (!err && user) {
                             // generate a token and send it to the user to verify the accounts
-                            let token = generateToken(10000,99999);
+                            let token = generateToken(10000, 99999);
                             res.status(201)
                                 .json({
                                     message: "School cloud space successfully crafted." +

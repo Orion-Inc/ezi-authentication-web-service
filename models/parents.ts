@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { default as Relationship } from "@models/relationship"
+import {default as Relationship} from "@models/relationship"
 
 
 const Schema = mongoose.Schema;
@@ -17,8 +17,8 @@ const ParentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Relationship',
     }
-},{
-    timestamps:{
+}, {
+    timestamps: {
         createdAt: "created_at",
         updatedAt: "updated_at"
     }
@@ -26,7 +26,7 @@ const ParentSchema = new Schema({
 
 // making configurations for the middleware hooks
 ParentSchema.pre("update", function (next) {
-    this.update({},{ $set: { updated_at: Date.now() }});
+    this.update({}, {$set: {updated_at: Date.now()}});
     next();
 });
 
