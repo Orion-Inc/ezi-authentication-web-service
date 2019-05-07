@@ -4,7 +4,7 @@ import { default as SignUpController } from "@controllers/auth/SignUpController"
 
 const signUpRouter = Router();
 signUpRouter.post('/signup',
-    SignUpPolicy.registerPolicy,
+    [SignUpPolicy.registerPolicy, SignUpPolicy.doesSchoolExist],
     SignUpController.register
     );
 
