@@ -1,4 +1,5 @@
 import {Request, Response, NextFunction} from "express";
+import {default as School} from "@models/school"
 import * as Joi from "joi"
 
 class SignUpPolicy {
@@ -73,10 +74,23 @@ class SignUpPolicy {
             next();
         }
     };
-    static doesSchoolExist = (role: string) => {
-        return async (req: Response, res: Response, next: NextFunction) => {
+    static doesSchoolExist = (req: Request, res: Response, next: NextFunction) => {
+        School.findOne({
+                name: req.body.name ,
+                phone: req.body.phone
+            }).lean().then(school => {
+                if (school) {
+                    res.status(403)
+                        .json({
+                            message: "School already exists",
+                            success: false,
+                            results: school
+                        });
+                } else {
+                    next();
+                }
+        });
 
-        }
     }
 }
 
