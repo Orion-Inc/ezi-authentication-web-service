@@ -74,21 +74,22 @@ class SignUpPolicy {
             next();
         }
     };
+
     static doesSchoolExist = (req: Request, res: Response, next: NextFunction) => {
         School.findOne({
-                name: req.body.name ,
-                phone: req.body.phone
-            }).lean().then(school => {
-                if (school) {
-                    res.status(403)
-                        .json({
-                            message: "School already exists",
-                            success: false,
-                            results: school
-                        });
-                } else {
-                    next();
-                }
+            name: req.body.name,
+            phone: req.body.phone
+        }).lean().then(school => {
+            if (school) {
+                res.status(403)
+                    .json({
+                        message: "School already exists",
+                        success: false,
+                        results: school
+                    });
+            } else {
+                next();
+            }
         });
 
     }
