@@ -7,7 +7,7 @@ const server = request.agent("http://localhost:8088");
 // testing the /testing endpoint
 describe("GET /testing", function () {
     it('should return a testing message', function (done) {
-         server
+        server
             .get("/testing")
             .expect(200)
             .end((err, results) => {
@@ -20,10 +20,9 @@ describe("GET /testing", function () {
 });
 
 // testing the policies for the sign up endpoint
-describe("POST /auth/signup for validating input policies", function() {
+describe("POST /auth/signup for validating input policies", function () {
     it('should validate against the policies', function (done) {
-        server.
-            post("/api/v1/auth/signup")
+        server.post("/api/v1/auth/signup")
             .send({
                 name: "Presec International",
                 email: "presec@gmail.com",
@@ -32,7 +31,7 @@ describe("POST /auth/signup for validating input policies", function() {
                 is_basic: true,
                 is_secondary: false
             })
-            .expect("Content-Type",/json/)
+            .expect("Content-Type", /json/)
             .expect(403)
             .end((err, response) => {
                 expect(response.body.success).to.be.false;
@@ -55,7 +54,7 @@ describe("POST /auth/signup for signing up", function () {
                 is_basic: true,
                 is_secondary: false
             })
-            .expect("Content-Type",/json/)
+            .expect("Content-Type", /json/)
             .expect(201)
             .end((err, response) => {
                 expect(response.body.results.email).to.equal("presec@gmail.com");
