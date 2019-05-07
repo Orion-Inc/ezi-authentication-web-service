@@ -1,19 +1,19 @@
 import {default as School} from "@models/school"
 import {default as Users} from "@models/users"
 import {default as Roles} from "@models/roles"
-import {hashPassword, generateToken} from "@utils/resolvers";
+import {hashPassword, generateToken, generateUUID } from "@utils/resolvers";
 import {Request, Response} from "express";
 
 class SignUpController {
     static register = async (req: Request, res: Response) => {
         const schoolQuery = new School({
             name: req.body.name,
-            description: req.body.description,
-            motto: req.body.motto,
-            address: req.body.address,
+            description: req.body.description || "",
+            motto: req.body.motto || "",
+            address: req.body.address || "",
             email: req.body.email,
             phone: req.body.phone,
-            website: req.body.website,
+            website: req.body.website || "",
             is_basic: req.body.is_basic,
             is_secondary: req.body.is_secondary
         });
@@ -22,10 +22,11 @@ class SignUpController {
                 // when the school information is saved successfully, then move on to save the user credentials
                 Roles.findOne({short: "sa"}, (err, role) => {
                     if (!err && role) {
-                        hashPassword(req.body.password).then((hashed) => {
+                        hashPassword(req.body.password).then(async (hashed) => {
                             const userQuery = new Users({
                                 email: req.body.email,
                                 password: hashed,
+                                uuid: await generateUUID(req.body.email),
                                 role_id: role._id,
                                 is_default: true
                             });
