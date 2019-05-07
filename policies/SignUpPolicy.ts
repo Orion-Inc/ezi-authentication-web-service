@@ -72,6 +72,11 @@ class SignUpPolicy {
         } else {
             next();
         }
+    };
+    static checkRolePolicy = (role: string) => {
+        return async (req: Response, res: Response, next: NextFunction) => {
+
+        }
     }
 }
 
