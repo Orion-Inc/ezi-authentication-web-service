@@ -73,7 +73,7 @@ class SignUpPolicy {
             next();
         }
     };
-    static checkRolePolicy = (role: string) => {
+    static doesSchoolExist = (role: string) => {
         return async (req: Response, res: Response, next: NextFunction) => {
 
         }
