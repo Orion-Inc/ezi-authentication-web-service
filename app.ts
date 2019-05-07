@@ -7,6 +7,7 @@ import express, {Request, Response} from "express";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import morgan from "morgan";
+import compression from "compression"
 import {default as authWebService} from "./api/v1/authentication-web-service";
 import {default as Roles} from "@models/roles";
 import {shortForRoles} from "./utils/resolvers";
@@ -36,6 +37,7 @@ class Server {
             extended: true
         }));
         this.app.use(morgan("dev"));
+        this.app.use(compression());
     }
 
     public testEndpoint(): void {
@@ -44,7 +46,7 @@ class Server {
                 .json({
                     message: "Server Up And Running !!!",
                     success: true
-                })
+                });
         });
     }
 
@@ -95,7 +97,7 @@ class Server {
         });
         // saving of roles endpoint
         this.app.post("/role/add", RolesPolicy.rolesPolicy, (req: Request, res: Response) => {
-            Roles.findOne({ name: req.body.name, short: shortForRoles( req.body.name ) }, (err, results) => {
+            Roles.findOne({name: req.body.name, short: shortForRoles(req.body.name)}, (err, results) => {
                 if (!err && results) {
                     res.status(200)
                         .json({
