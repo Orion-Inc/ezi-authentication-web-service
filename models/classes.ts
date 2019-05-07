@@ -11,8 +11,8 @@ const ClassSchema = new Schema({
         type: String,
         required: false
     },
-},{
-    timestamps:{
+}, {
+    timestamps: {
         createdAt: "created_at",
         updatedAt: "updated_at"
     }
@@ -20,7 +20,7 @@ const ClassSchema = new Schema({
 
 // making configurations for the middleware hooks
 ClassSchema.pre("update", function (next) {
-    this.update({},{ $set: { updated_at: Date.now() }});
+    this.update({}, {$set: {updated_at: Date.now()}});
     next();
 });
 

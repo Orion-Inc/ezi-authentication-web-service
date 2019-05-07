@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { default as Roles } from "./roles"
+import {default as Roles} from "./roles"
 
 const Schema = mongoose.Schema;
 
@@ -20,8 +20,8 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Roles',
     }
-},{
-    timestamps:{
+}, {
+    timestamps: {
         createdAt: "created_at",
         updatedAt: "updated_at"
     }

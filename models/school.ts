@@ -9,15 +9,15 @@ const SchoolSchema = new Schema({
     },
     description: {
         type: String,
-        required: true
+        required: false
     },
     motto: {
         type: String,
-        required: true
+        required: false
     },
     address: {
         type: String,
-        required: true
+        required: false
     },
     email: {
         type: String,

@@ -1,9 +1,7 @@
-import { default as Roles } from "../models/roles"
-import { default as Schools } from "../models/school"
-import { default as db } from "./test-conn/db.spec"
-import { expect } from "chai"
-
-
+import {default as Roles} from "../models/roles"
+import {default as Schools} from "../models/school"
+import {default as db} from "./test-conn/db.spec"
+import {expect} from "chai"
 
 // make the connection before you start something
 db();

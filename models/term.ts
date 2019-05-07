@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { default as Year } from "@models/year"
+import {default as Year} from "@models/year"
 
 const Schema = mongoose.Schema;
 
@@ -13,8 +13,8 @@ const TermSchema = new Schema({
         ref: 'Year',
         required: true
     }
-},{
-    timestamps:{
+}, {
+    timestamps: {
         createdAt: "created_at",
         updatedAt: "updated_at"
     }
@@ -22,7 +22,7 @@ const TermSchema = new Schema({
 
 // making configurations for the middleware hooks
 TermSchema.pre("update", function (next) {
-    this.update({},{ $set: { updated_at: Date.now() }});
+    this.update({}, {$set: {updated_at: Date.now()}});
     next();
 });
 
