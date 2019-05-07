@@ -17,7 +17,7 @@ class SignUpPolicy {
         const joiSchema = Joi.object().keys({
             name: Joi.string().min(8).required(),
             email: Joi.string().email({minDomainAtoms: 2}).required(),
-            password: Joi.string().regex(/[0-9A-Za-z]+{,8}/).min(8).required(),
+            password: Joi.string().regex(/^[0-9A-Za-z]+(?=.{8,})$/).min(8).required(),
             phone: Joi.number().integer().min(10).required(),
             is_basic: Joi.boolean().required(),
             is_secondary: Joi.boolean().required()
