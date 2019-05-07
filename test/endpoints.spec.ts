@@ -19,13 +19,13 @@ describe("GET /testing", function () {
 
 // testing the policies for the sign up endpoint
 describe("POST /auth/signup", function() {
-    it('should validate the password', function (done) {
+    it('should validate against the policies', function (done) {
         server.
             post("/api/v1/auth/signup")
             .send({
                 name: "Presec International",
                 email: "presec@gmail.com",
-                password: "LordBanks@1996",
+                password: "Lord",
                 phone: _.toNumber("0200746418"),
                 is_basic: true,
                 is_secondary: false
@@ -33,7 +33,31 @@ describe("POST /auth/signup", function() {
             .expect("Content-Type",/json/)
             .expect(403)
             .end((err, response) => {
-               console.log(response.body)
+                expect(response.body.success).to.be.false;
+                expect(response.body.message).to.be.a("string");
+                done();
+            });
+    });
+});
+
+describe("POST /auth/signup", function () {
+    it('should save data to the signup model', function (done) {
+        server
+            .post("/api/v1/auth/signup")
+            .send({
+                name: "Presec International",
+                email: "presec@gmail.com",
+                password: "Lordbanks@1996",
+                phone: _.toNumber("0200746418"),
+                is_basic: true,
+                is_secondary: false
+            })
+            .expect("Content-Type",/json/)
+            .expect(200)
+            .end((err, response) => {
+                expect(response.body.results.email).to.equal("presec@gmail.com");
+                expect(response.body.results).to.have.property("_id");
+                expect(response.body.results.uuid).to.be.a("string");
                 done();
             });
     });
