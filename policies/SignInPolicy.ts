@@ -1,4 +1,5 @@
 import * as Joi from "joi"
+import {default as Users} from "@models/users";
 import {NextFunction, Request, Response} from "express";
 
 class SignInPolicy {
@@ -44,6 +45,20 @@ class SignInPolicy {
         }
     };
 
+    static checkRole(req: Request, res: Response, next: NextFunction) {
+        Users.findOne({email: req.body.email})
+            .exec((err, results) => {
+                if (!err && results) {
+                    // checking the role of the particular email
+                } else {
+                    res.status(404)
+                        .json({
+                            message: "Email doesn't exist",
+                            success: false
+                        });
+                }
+            });
+    }
 }
 
 export default SignInPolicy;
