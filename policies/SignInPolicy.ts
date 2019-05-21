@@ -1,6 +1,7 @@
 import * as Joi from "joi"
 import {default as Users} from "@models/users";
 import {NextFunction, Request, Response} from "express";
+import Roles from "@models/roles";
 
 class SignInPolicy {
     static loginPolicy(req: Request, res: Response, next: NextFunction) {
@@ -47,9 +48,24 @@ class SignInPolicy {
 
     static checkRole(req: Request, res: Response, next: NextFunction) {
         Users.findOne({email: req.body.email})
-            .exec((err, results) => {
-                if (!err && results) {
+            .exec((err, user) => {
+                if (!err && user) {
                     // checking the role of the particular email
+                    Roles.findById(user._id)
+                        .exec((err, roles) => {
+                            if (!err && roles) {
+                                // setting the user data and the role data to the locals
+                                res.locals.user = user;
+                                res.locals.role = roles;
+                                next();
+                            } else {
+                                res.status(404)
+                                    .json({
+                                        message: 'No role associated with this user. Contact School Admin',
+                                        success: false
+                                    });
+                            }
+                        });
                 } else {
                     res.status(404)
                         .json({
