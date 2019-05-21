@@ -42,7 +42,8 @@ class SignInPolicy {
         } else {
             next();
         }
-    }
+    };
+
 }
 
 export default SignInPolicy;
