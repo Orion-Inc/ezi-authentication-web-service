@@ -1,11 +1,14 @@
 import {Request, Response} from "express";
 
 class SignInController {
-    static login = (req: Request, res: Response) => {
-        const reqBody = {
-            email: req.body.email,
-            password: req.body.password
-        }
+    static login = async (req: Request, res: Response) => {
+        // getting the values from the locals in the res value
+        res.status(200)
+            .json({
+                message: 'Token generated successfully',
+                success: true,
+                results: res.locals.user
+            })
     }
 }
 

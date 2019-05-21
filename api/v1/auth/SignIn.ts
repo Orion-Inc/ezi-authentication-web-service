@@ -4,7 +4,7 @@ import {default as SignInController} from "@controllers/auth/SignInController"
 
 const signInRouter = Router();
 signInRouter.post('/login',
-    SignInPolicy.loginPolicy, SignInController.login);
+    [SignInPolicy.loginPolicy, SignInPolicy.checkRole], SignInController.login);
 
 // exporting the sign in router for the mouthpiece to use
 export default signInRouter;
