@@ -13,7 +13,7 @@ class SignInPolicy {
         // validation schema here
         const joiSchema = Joi.object().keys({
             email: Joi.string().email({minDomainAtoms: 2}).required(),
-            password: Joi.string().regex(/^[0-9A-Za-z]+$/).min(6).required()
+            password: Joi.string().required()
         });
 
         let {error} = Joi.validate(bodyReq, joiSchema);
@@ -48,10 +48,11 @@ class SignInPolicy {
 
     static checkRole(req: Request, res: Response, next: NextFunction) {
         Users.findOne({email: req.body.email})
-            .exec((err, user) => {
-                if (!err && user) {
+            .exec((err, results) => {
+                if (!err && results) {
+                    const user: any = results;
                     // checking the role of the particular email
-                    Roles.findById(user._id)
+                    Roles.findById(user.role_id)
                         .exec((err, roles) => {
                             if (!err && roles) {
                                 // setting the user data and the role data to the locals
@@ -74,7 +75,7 @@ class SignInPolicy {
                         });
                 }
             });
-    }
+    };
 }
 
 export default SignInPolicy;
